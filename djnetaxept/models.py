@@ -21,7 +21,10 @@ class NetaxeptPayment(models.Model):
     responsetext = models.CharField(max_length=255, null=True, blank=True)
 
     objects = NetaxeptPaymentManager()
-    
+
+    def __unicode__(self):
+        return unicode(self.id)
+
     def sale(self, amount):
         return NetaxeptTransaction.objects.sale_payment(self, amount)
 
@@ -71,6 +74,9 @@ class NetaxeptTransaction(models.Model):
     responsetext = models.CharField(max_length=255, null=True, blank=True)
 
     objects = NetaxeptTransactionManager()
+
+    def __unicode__(self):
+        return unicode(self.id)
 
     def completed(self):
         return not self.flagged
