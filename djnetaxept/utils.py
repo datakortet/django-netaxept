@@ -13,6 +13,7 @@ CURRENCY_CODE = getattr(settings, 'NETAXEPT_CURRENCY_CODE', 'NOK')
 
 AUTOAUTH = getattr(settings, 'NETAXEPT_AUTOAUTH', None)
 PAYMENT_METHOD_LIST = getattr(settings, 'NETAXEPT_PAYMENT_METHOD_LIST', None)
+PAYMENT_METHOD_ACTION_LIST = getattr(settings, 'NETAXEPT_PAYMENT_METHOD_ACTION_LIST', None)
 PAYMENT_FEE_LIST = getattr(settings, 'NETAXEPT_PAYMENT_FEE_LIST', None)
 
 def get_client():        
@@ -31,6 +32,7 @@ def get_basic_registerrequest(client, redirecturl, language):
     terminal = order = get_netaxept_object(client, 'Terminal')
     terminal.AutoAuth = AUTOAUTH
     terminal.PaymentMethodList = PAYMENT_METHOD_LIST
+    terminal.PaymentMethodActionList = PAYMENT_METHOD_ACTION_LIST
     terminal.FeeList = PAYMENT_FEE_LIST
     terminal.Language = language
     terminal.OrderDescription = None
