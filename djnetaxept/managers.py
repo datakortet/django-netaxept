@@ -42,13 +42,14 @@ class NetaxeptPaymentManager(models.Manager):
         
         payment.save()
         return payment
-        
+
+
 class NetaxeptTransactionManager(models.Manager):
     
     def sale_payment(self, payment, amount):
 
         if not payment.completed():
-             raise PaymentRegistrationNotCompleted
+             raise PaymentRegistrationNotCompleted(payment, amount)
 
         client = get_client()
         operation = 'SALE'
@@ -76,7 +77,7 @@ class NetaxeptTransactionManager(models.Manager):
     def auth_payment(self, payment):
         
         if not payment.completed():
-            raise PaymentRegistrationNotCompleted
+            raise PaymentRegistrationNotCompleted(payment)
                  
         client = get_client()
         operation = 'AUTH'
@@ -130,7 +131,7 @@ class NetaxeptTransactionManager(models.Manager):
         self.require_auth(payment)
         
         if not self.get_query_set().filter(payment=payment, operation='CAPTURE').exists():
-            raise NoAmountCaptured        
+            raise NoAmountCaptured(payment, amount)
             
         client = get_client()
         operation = 'CREDIT'
@@ -160,7 +161,7 @@ class NetaxeptTransactionManager(models.Manager):
         self.require_auth(payment)
         
         if self.get_query_set().filter(payment=payment, operation='CAPTURE').exists():
-            raise AmountAllreadyCaptured
+            raise AmountAllreadyCaptured(payment)
                    
         client = get_client()
         operation = 'ANNUL'
@@ -185,4 +186,4 @@ class NetaxeptTransactionManager(models.Manager):
     
     def require_auth(self, payment):
         if not self.get_query_set().filter(payment=payment, operation='AUTH').exists():
-            raise PaymentNotAuthorized
+            raise PaymentNotAuthorized(payment)
