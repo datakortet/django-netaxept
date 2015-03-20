@@ -1,15 +1,26 @@
+# -*- coding: utf-8 -*-
+
+
 class BaseNetaxeptException(Exception):
-    def __str__(self):
-        return repr(self.msg)
+    "Base class for Netaxept exceptions."
+    def __init__(self, *args, **kwargs):
+        super(BaseNetaxeptException, self).__init__(
+            *(args or (self.__class__.__doc__,)),
+            **kwargs
+        )
+
 
 class PaymentNotAuthorized(BaseNetaxeptException):
-    msg = 'Payment not authorized'
+    "Payment not authorized"
+
 
 class AmountAllreadyCaptured(BaseNetaxeptException):
-    msg = 'Amount allready captured, do a CREDIT'
+    "Amount allready captured, do a CREDIT"
+
 
 class NoAmountCaptured(BaseNetaxeptException):
-    msg = 'No amount captured nothing to CREDIT'
+    "No amount captured nothing to CREDIT"
+
 
 class PaymentRegistrationNotCompleted(BaseNetaxeptException):
-    msg = 'Payment registration is not completed yet'
+    "Payment registration is not completed yet"
