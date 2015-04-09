@@ -1,3 +1,4 @@
+-e ../dk
 django-easytests
 argparse
 suds

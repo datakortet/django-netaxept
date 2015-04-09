@@ -1,6 +1,7 @@
-from datakortet.utils import kr_ore
+
 from django.contrib import admin
 from djnetaxept.models import NetaxeptPayment, NetaxeptTransaction
+from dk.utils import kr_ore
 
 
 class NetaxeptPaymentOptions(admin.ModelAdmin):
