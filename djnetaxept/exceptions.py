@@ -24,3 +24,8 @@ class NoAmountCaptured(BaseNetaxeptException):
 
 class PaymentRegistrationNotCompleted(BaseNetaxeptException):
     "Payment registration is not completed yet"
+    
+
+class ProcessException(Exception):
+    pass
+
