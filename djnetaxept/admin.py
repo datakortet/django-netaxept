@@ -1,14 +1,14 @@
 
 from django.contrib import admin
 from djnetaxept.models import NetaxeptPayment, NetaxeptTransaction
-from dk.utils import kr_ore
+from djnetaxept.currency_NOK import currency_NOK as kr_ore
 
 
 class NetaxeptPaymentOptions(admin.ModelAdmin):
     list_display = """
-    id transaction_id Amount currencycode description ordernumber
-    OK responsecode responsesource responsetext
-    """.split()
+        id transaction_id Amount currencycode description ordernumber
+        OK responsecode responsesource responsetext
+        """.split()
 
     def Amount(self, pmt):
         return kr_ore(pmt.amount)
@@ -24,9 +24,9 @@ class NetaxeptPaymentOptions(admin.ModelAdmin):
 
 class NetaxeptTransactionOptions(admin.ModelAdmin):
     list_display = """
-    id Payment transaction_id operation Amount OK
-    responsecode responsesource responsetext
-    """.split()
+        id Payment transaction_id operation Amount OK
+        responsecode responsesource responsetext
+        """.split()
     raw_id_fields = ['payment']
     readonly_fields = ['Payment']
 
