@@ -25,15 +25,12 @@ class NetaxeptPayment(models.Model):
     def __unicode__(self):
         return unicode(self.id)
 
-    def sale(self, amount):
+    def sale(self, amount=0):
         return NetaxeptTransaction.objects.sale_payment(self, amount)
 
     def auth(self):
         return NetaxeptTransaction.objects.auth_payment(self)
-        
-    def sale(self):
-        return NetaxeptTransaction.objects.sale_payment(self)
-        
+
     def completed(self):
         return not self.flagged
     
