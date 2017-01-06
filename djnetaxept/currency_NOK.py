@@ -34,4 +34,4 @@ def currency_NOK(n, sep=','):
     """Convert the 'cent'-value ``n`` to a proper NOK string value.
     """
     kr, ore = divmod(n, 100)
-    return integer_currecny_NOK(kr) + sep + fractional_currency_NOK(ore)
+    return integer_currency_NOK(kr) + sep + fractional_currency_NOK(ore)
