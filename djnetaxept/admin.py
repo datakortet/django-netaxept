@@ -9,6 +9,8 @@ class NetaxeptPaymentOptions(admin.ModelAdmin):
         id transaction_id Amount currencycode description ordernumber
         OK responsecode responsesource responsetext
         """.split()
+    search_fields = ['transaction_id', 'description', 'ordernumber']
+    list_filter = ['responsecode', 'responsesource']
 
     def Amount(self, pmt):
         return kr_ore(pmt.amount)
