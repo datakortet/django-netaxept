@@ -29,6 +29,8 @@ class NetaxeptTransactionOptions(admin.ModelAdmin):
         """.split()
     raw_id_fields = ['payment']
     readonly_fields = ['Payment']
+    search_fields = ['transaction_id']
+    list_filter = ['operation', 'responsecode', 'responsesource']
 
     def Payment(self, pmt):
         return u'<a href="/admin/djnetaxept/netaxeptpayment/%d/">%s</a>' % (
