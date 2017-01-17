@@ -57,6 +57,7 @@ def get_basic_registerrequest(client, redirecturl, language):
 
 
 def handle_response_exception(exception, obj):
+    logger.debug(exception.fault)
     bbsexception = getattr(exception.fault.detail, 'BBSException', None)
     obj.flagged = True
     if bbsexception:
@@ -67,4 +68,4 @@ def handle_response_exception(exception, obj):
         obj.message = bbsexception.Message
     else:
         obj.responsetext = exception.fault.detail[0].Message
-    raise exception
+    # raise exception
