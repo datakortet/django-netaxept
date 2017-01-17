@@ -9,6 +9,7 @@ STATUS_CHOICES = (
     ('ANNUL', 'ANNUL')
 )
 
+
 class NetaxeptPayment(models.Model):
     transaction_id = models.CharField(max_length=32)
     amount = models.IntegerField(null=True, blank=True)
@@ -33,7 +34,8 @@ class NetaxeptPayment(models.Model):
 
     def completed(self):
         return not self.flagged
-    
+
+
 """
 RECURRING_CHOICES = (
     ('S', 'S'),
@@ -54,6 +56,7 @@ OPERATION_CHOICES = (
     ('ANNUL', 'ANNUL')
 )
 
+
 class NetaxeptTransaction(models.Model):
     payment = models.ForeignKey(NetaxeptPayment)
     transaction_id = models.CharField(max_length=32)
@@ -71,12 +74,12 @@ class NetaxeptTransaction(models.Model):
 
     def capture(self, amount):
         return NetaxeptTransaction.objects.capture_payment(self.payment, amount)
-        
+
     def credit(self, amount):
         return NetaxeptTransaction.objects.credit_payment(self.payment, amount)
-        
+
     def annul(self):
         return NetaxeptTransaction.objects.annul_payment(self.payment)
-        
+
     def completed(self):
         return not self.flagged

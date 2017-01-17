@@ -2,7 +2,8 @@
 
 
 class BaseNetaxeptException(Exception):
-    "Base class for Netaxept exceptions."
+    """Base class for Netaxept exceptions.
+    """
     def __init__(self, *args, **kwargs):
         super(BaseNetaxeptException, self).__init__(
             *(args or (self.__class__.__doc__,)),
@@ -11,19 +12,23 @@ class BaseNetaxeptException(Exception):
 
 
 class PaymentNotAuthorized(BaseNetaxeptException):
-    "Payment not authorized"
+    """Payment not authorized
+    """
 
 
 class AmountAllreadyCaptured(BaseNetaxeptException):
-    "Amount allready captured, do a CREDIT"
+    """Amount allready captured, do a CREDIT
+    """
 
 
 class NoAmountCaptured(BaseNetaxeptException):
-    "No amount captured nothing to CREDIT"
+    """No amount captured nothing to CREDIT
+    """
 
 
 class PaymentRegistrationNotCompleted(BaseNetaxeptException):
-    "Payment registration is not completed yet"
+    """Payment registration is not completed yet
+    """
     
 
 class ProcessException(Exception):
