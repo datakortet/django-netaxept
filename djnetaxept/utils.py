@@ -58,7 +58,18 @@ def get_basic_registerrequest(client, redirecturl, language):
 
 def handle_response_exception(exception, obj):
     logger.debug(exception.fault)
-    bbsexception = getattr(exception.fault.detail, 'BBSException', None)
+    bbsexception = None
+    fault = None
+    detail = None
+    if exception and hasattr(exception, 'fault'):
+        fault = exception.fault
+        if hasattr(fault, 'detail'):
+            detail = fault.detail
+            if hasattr(detail, 'BBSException'):
+                bbsexception = detail.BBSException
+    if fault is None or detail is None:
+        logger.warning("Unknown exception structure: %r", exception)
+        
     obj.flagged = True
     if bbsexception:
         result = bbsexception.Result
@@ -66,6 +77,8 @@ def handle_response_exception(exception, obj):
         obj.responsesource = result.ResponseSource
         obj.responsetext = result.ResponseText
         obj.message = bbsexception.Message
+    elif detail:
+        obj.responsetext = detail[0].Message
     else:
-        obj.responsetext = exception.fault.detail[0].Message
+        obj.responsetext = str(exception)
     # raise exception
