@@ -1,8 +1,10 @@
 import logging
 import suds
+import requests
+from djnetaxept.utils import MERCHANTID, TOKEN
+from django.conf import settings
 from django.db import models
 from django.db.models import Q
-
 from djnetaxept.utils import get_client, get_basic_registerrequest, get_netaxept_object, handle_response_exception
 from djnetaxept.operations import register, process, query, batch
 from djnetaxept.exceptions import PaymentNotAuthorized, AmountAllreadyCaptured, NoAmountCaptured, ProcessException, \
@@ -47,6 +49,25 @@ class NetaxeptPaymentManager(models.Manager):
             payment.save()
 
         return payment
+
+    def query(self, payment):
+        """Use Netaxept REST API to query a payment.
+        Args:
+            payment: The payment we want to check.
+
+        Returns: The full response.content from the query.
+        """
+
+        url = settings.NETAXEPT_REST_QUERY
+        response = requests.post(
+            url,
+            data={
+                'merchantId': MERCHANTID,
+                'token': TOKEN,
+                'transactionId': payment.transaction_id
+            }
+        )
+        return response.content
 
 
 class NetaxeptTransactionManager(models.Manager):

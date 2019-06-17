@@ -26,6 +26,9 @@ class NetaxeptPayment(models.Model):
     def __unicode__(self):
         return unicode(self.id)
 
+    def query(self):
+        return NetaxeptPayment.objects.query(self)
+
     def sale(self, amount=0):
         return NetaxeptTransaction.objects.sale_payment(self, amount)
 
