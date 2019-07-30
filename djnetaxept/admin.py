@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from djnetaxept.models import NetaxeptPayment, NetaxeptTransaction
-from djnetaxept.currency_NOK import currency_NOK as kr_ore
+from djnetaxept.currency_nok import currency_NOK as kr_ore
 
 
 class NetaxeptPaymentOptions(admin.ModelAdmin):

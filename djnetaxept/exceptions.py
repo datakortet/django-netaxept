@@ -33,4 +33,3 @@ class PaymentRegistrationNotCompleted(BaseNetaxeptException):
 
 class ProcessException(Exception):
     pass
-
