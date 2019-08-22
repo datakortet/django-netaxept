@@ -5,12 +5,40 @@ from djnetaxept.utils import MERCHANTID, TOKEN
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from djnetaxept.credentials import Credentials
 from djnetaxept.utils import get_client, get_basic_registerrequest, get_netaxept_object, handle_response_exception
 from djnetaxept.operations import register, process, query, batch
 from djnetaxept.exceptions import PaymentNotAuthorized, AmountAllreadyCaptured, NoAmountCaptured, ProcessException, \
     PaymentRegistrationNotCompleted
 
 logger = logging.getLogger('djnetaxept.managers')
+
+
+"""The merchantid and token should not be stored here, but rather in a secure vault.
+For testing purposes, it can however be convenient to set them here. Just remember to
+never use the token for production here in this file. (Test environment has its own 
+token.
+"""
+if hasattr(settings, 'NETS_CTX'):
+    NETS_CTX = settings.NETS_CTX
+else:
+    class CTX(Credentials):
+        def __init__(self):
+            merchantid = '12345'
+            token = 'abc123'
+            self.rest_url = 'https://test.epayment.nets.eu/Netaxept/'
+            self.terminal = "https://epayment-test.bbs.no/Terminal/default.aspx"
+            super(CTX, self).__init__(merchantid, token, self.rest_url)
+
+    NETS_CTX = CTX()
+
+MERCHANTID = NETS_CTX.merchantid
+TOKEN = NETS_CTX.token
+REST_URL = NETS_CTX.rest_url
+TERMINAL = NETS_CTX.terminal
+REGISTER_URL = NETS_CTX.rest_register
+PROCESS_URL = NETS_CTX.rest_process
+QUERY_URL = NETS_CTX.rest_query
 
 
 class NetaxeptPaymentManager(models.Manager):
