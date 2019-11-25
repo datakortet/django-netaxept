@@ -1,0 +1,10 @@
+_schema: https://static.datakortet.no/schema/dkbuild.schema.yaml
+
+package:
+  name: django-netaxept
+  description: This is a generic payment app for django using Netaxept
+  version: '1.0'
+  created: 2012
+
+build:
+  venv: django-netaxept
