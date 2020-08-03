@@ -23,6 +23,9 @@ class NetaxeptPayment(models.Model):
 
     objects = NetaxeptPaymentManager()
 
+    class Meta:
+        app_label = 'djnetaxept'
+
     def __unicode__(self):
         return unicode(self.id)
 
@@ -71,6 +74,9 @@ class NetaxeptTransaction(models.Model):
     responsetext = models.CharField(max_length=255, null=True, blank=True)
 
     objects = NetaxeptTransactionManager()
+
+    class Meta:
+        app_label = 'djnetaxept'
 
     def __unicode__(self):
         return unicode(self.id)
