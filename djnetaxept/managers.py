@@ -121,7 +121,7 @@ class NetaxeptTransactionManager(models.Manager):
 
         try:
             response = process(client, request)
-        except suds.WebFault, e:
+        except suds.WebFault as e:
             handle_response_exception(e, transaction)
 
         transaction.save()
